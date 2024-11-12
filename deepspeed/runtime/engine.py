@@ -3667,6 +3667,7 @@ class DeepSpeedEngine(Module):
         If a compiler_fn is set, it will be used instead of torch.compile().
         """
         # Avoid graph breaks
+        nvtx_state = deepspeed.utils.nvtx.enable_nvtx
         deepspeed.utils.nvtx.enable_nvtx = False
 
         if not is_compile_supported():
@@ -3681,6 +3682,7 @@ class DeepSpeedEngine(Module):
         # create new dict to avoid modifying original dict
         self.module.compile(**{**compile_kwargs, 'backend': backend})
         self._is_compiled = True
+        deepspeed.utils.nvtx.enable_nvtx = nvtx_state
 
     @property
     def is_compiled(self) -> bool:
