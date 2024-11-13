@@ -211,6 +211,8 @@ class CUDA_Accelerator(DeepSpeedAccelerator):
             return False
 
     def supported_dtypes(self):
+        if not torch.cuda.is_available():
+            return [torch.float]
         supported_dtypes = [torch.float]
         if self.is_fp16_supported():
             supported_dtypes.append(torch.half)
