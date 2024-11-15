@@ -1768,6 +1768,9 @@ class DeepSpeedEngine(Module):
         if self.mpu is not None:
             data_parallel_world_size = self.mpu.get_data_parallel_world_size()
             data_parallel_rank = self.mpu.get_data_parallel_rank()
+        else:
+            data_parallel_world_size = self.dp_world_size
+            data_parallel_rank = groups._get_sequence_data_parallel_rank()
 
         if data_sampler is None and (route == ROUTE_PREDICT or route == ROUTE_EVAL):
             data_sampler = torch.utils.data.DistributedSampler(
