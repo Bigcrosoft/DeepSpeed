@@ -18,6 +18,12 @@ TRAIN_BATCH_SIZE = "train_batch_size"
 TRAIN_BATCH_SIZE_DEFAULT = None
 
 #############################################
+# Number of GPUs
+#############################################
+NUM_GPUS = "num_gpus"
+NUM_GPUS_DEFAULT = 1
+
+#############################################
 # Sparse attention
 #############################################
 SPARSE_ATTENTION = "sparse_attention"
