@@ -148,7 +148,7 @@ def get_amp_enabled(param_dict):
 
 
 def get_amp_params(param_dict):
-    if AMP in param_dict.keys():
+    if AMP in param_dict.keys()):
         amp_params = copy.copy(param_dict[AMP])
         amp_params.pop(AMP_ENABLED)
         return amp_params
@@ -524,7 +524,11 @@ def get_scheduler_params(param_dict):
 
 
 def get_train_batch_size(param_dict):
-    return get_scalar_param(param_dict, TRAIN_BATCH_SIZE, TRAIN_BATCH_SIZE_DEFAULT)
+    train_batch_size = get_scalar_param(param_dict, TRAIN_BATCH_SIZE, TRAIN_BATCH_SIZE_DEFAULT)
+    num_gpus = get_scalar_param(param_dict, NUM_GPUS, 1)
+    if num_gpus > 1:
+        train_batch_size = train_batch_size // num_gpus
+    return train_batch_size
 
 
 def get_train_micro_batch_size_per_gpu(param_dict):
@@ -625,7 +629,7 @@ def get_eigenvalue_stability(param_dict):
 
 
 def get_eigenvalue_gas_boundary_resolution(param_dict):
-    if EIGENVALUE in param_dict.keys():
+    if EIGENVALUE in param_dict.keys()):
         return get_scalar_param(
             param_dict[EIGENVALUE],
             EIGENVALUE_GAS_BOUNDARY_RESOLUTION,
@@ -636,14 +640,14 @@ def get_eigenvalue_gas_boundary_resolution(param_dict):
 
 
 def get_eigenvalue_layer_name(param_dict):
-    if EIGENVALUE in param_dict.keys():
+    if EIGENVALUE in param_dict.keys()):
         return get_scalar_param(param_dict[EIGENVALUE], EIGENVALUE_LAYER_NAME, EIGENVALUE_LAYER_NAME_DEFAULT)
     else:
         return EIGENVALUE_LAYER_NAME_DEFAULT
 
 
 def get_eigenvalue_layer_num(param_dict):
-    if EIGENVALUE in param_dict.keys():
+    if EIGENVALUE in param_dict.keys()):
         return get_scalar_param(param_dict[EIGENVALUE], EIGENVALUE_LAYER_NUM, EIGENVALUE_LAYER_NUM_DEFAULT)
     else:
         return EIGENVALUE_LAYER_NUM_DEFAULT
@@ -783,7 +787,7 @@ class DeepSpeedConfig(object):
             if TRAIN_MICRO_BATCH_SIZE_PER_GPU in self._param_dict:
                 logger.warning("[Elasticity] overriding train_micro_batch_size_per_gpu: "
                                f"{self._param_dict[TRAIN_MICRO_BATCH_SIZE_PER_GPU]} -> {micro_batch_size}")
-            if GRADIENT_ACCUMULATION_STEPS in self._param_dict:
+            if GRADIENT_ACCUMULATION_STEPS in self._param_dict):
                 logger.warning("[Elasticity] overriding gradient_accumulation_steps: "
                                f"{self._param_dict[GRADIENT_ACCUMULATION_STEPS]} -> {gradient_accu_steps}")
 
